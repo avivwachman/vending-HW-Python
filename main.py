@@ -37,16 +37,6 @@ def enough_nis():
     sys.exit()
 
 
-def print_coins(excess):
-    coins = (20, 10, 5, 2, 1, 0.5, 0.1)
-    for coin in coins:
-        if coin < excess:
-            num_of_coins = int(excess / coin)
-            print(num_of_coins, "coins of", coin)
-            excess = excess - num_of_coins * coin + 0.0000001
-    enough_nis()
-
-
 def give_back(nis_to_get):
     nis_entered = input()
     excess = round(float(nis_entered) - float(nis_to_get), 2)
@@ -57,6 +47,16 @@ def give_back(nis_to_get):
         sys.exit()
     print("Your excess is:", excess)
     return excess
+
+
+def print_coins(excess):
+    coins = (20, 10, 5, 2, 1, 0.5, 0.1)
+    for coin in coins:
+        if coin < excess:
+            num_of_coins = int(excess / coin)
+            print(num_of_coins, "coins of", coin)
+            excess = round(excess - num_of_coins * coin, 5)
+    enough_nis()
 
 
 if __name__ == '__main__':
