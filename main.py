@@ -1,15 +1,6 @@
 """ Vending Machine,   Aviv Wachman"""
 
 
-def round_only_up(floater, up_by):
-    """Gets a float to round, by how much to round and returns the rounded float only if it's it's smaller"""
-    rounded_float = round(floater, up_by)
-    if rounded_float < floater:
-        return floater
-    else:
-        return rounded_float
-
-
 def init_machine():
     """Creates a dict of the drinks, tuple of the prices and returns both"""
     bev_dict = {"1": "Ness Coffee", "2": "Coffee Black", "3": "Tea", "4": "Hot Chocolate", "5": "Soup",
@@ -40,35 +31,19 @@ def choose(bev, bev_dict, money_tuple):
     return nis_to_get
 
 
-def check_num(money):
-    """Gets a float and checks how many after it goes.
-     If goes more than once after the dot, returns false. Else returns true."""
-    money = str(money)
-    money = money.split('.')
-    if len(money) == 1:
-        return False
-    after_dot_len = len(money[1])
-    if after_dot_len > 1:
-        print("ERROR- entered coin not in use")
-        return False
-    return True
-
-
 def give_back(nis_entered, nis_to_get):
     """Get's the paid amount and the payment required. Returns the excess or the amount needed to add or
      thanks you for using the vending machine"""
     print(f"You entered {nis_entered} NIS")
-    if not check_num(nis_entered):
-        print(f"You got back {nis_entered} NIS")
-        return  # return None
-    excess = round(float(nis_entered) - float(nis_to_get), 2)
+    excess = float(nis_entered) - float(nis_to_get)
     if excess == 0:
         print("Thank you for using my beverage machine")
         return 0
     if excess < 0:
         print("Not Enough Money")
-        print("You are missing", abs(excess))
+        print("You are missing", abs(int(excess * 10 - 0.5) / 10))
         return  # return None
+    excess = int(excess * 10 + 0.5) / 10
     print("Your excess is:", excess)
     return excess
 
@@ -80,7 +55,7 @@ def print_coins(excess):
         if coin < excess:
             num_of_coins = int(excess / coin)
             print(num_of_coins, "coins of", coin, "NIS")
-            excess = round_only_up(excess - num_of_coins * coin, 5)
+            excess = int((excess - num_of_coins * coin)*10 + 0.5)/10
     print("Thank you for using my beverage machine")
 
 
